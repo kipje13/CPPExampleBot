@@ -27,7 +27,7 @@ ExampleBot::ExampleBot(int _index, int _team, std::string _name)
 
   gamestate.carStates[_index] = carstate;
 
-  gamestate.BuildAndSend();
+  Interface::SetGameState(gamestate);
 }
 
 Controller ExampleBot::GetOutput(
