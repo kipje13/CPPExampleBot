@@ -5,13 +5,26 @@
 #include "bot.h"
 #include "botmanager.h"
 #include "interface.h"
+#include "platform.h"
 
+#include <cctype>
+#include <fstream>
 #include <iostream>
+#include <string>
 
-int main(int argc, char** argv) {
-  int botIndex = 0;
-  int botTeam = 0;
-  std::string botName = "";
+uint16_t getPortFromFile(std::string filename) {
+  std::ifstream file;
+  file.open(filename);
+  std::string line;
+  std::getline(file, line);
+  file.close();
+
+  return std::stoi(line);
+}
+
+int main(int argc, char **argv) {
+  Platform::SetWorkingDirectory(Platform::GetExecutableDirectory());
+  uint16_t port = getPortFromFile("port.cfg");
 
   std::string interface_dll = std::string(DLLNAME);
 
@@ -19,13 +32,7 @@ int main(int argc, char** argv) {
   for (int i = 1; i < argc; ++i) {
     std::string arg(argv[i]);
 
-    if ((arg == "-index") && i + 1 < argc) {
-      botIndex = atoi(argv[++i]);
-    } else if ((arg == "-team") && i + 1 < argc) {
-      botTeam = atoi(argv[++i]);
-    } else if ((arg == "-name") && i + 1 < argc) {
-      botName = std::string(argv[++i]);
-    } else if ((arg == "-dll-path") && i + 1 < argc) {
+    if ((arg == "-dll-path") && i + 1 < argc) {
       interface_dll = std::string(argv[++i]) + "\\" + DLLNAME;
     } else {
       std::cerr << "Bad option: '" << arg << "'" << std::endl;
@@ -37,9 +44,8 @@ int main(int argc, char** argv) {
   while (!Interface::IsInitialized()) {
   }
 
-  ExampleBot b(botIndex, botTeam, botName);
-
-  BotManager::RunSingleBot(&b);
+  BotManager<ExampleBot> botmanager = BotManager<ExampleBot>();
+  botmanager.StartBotServer(port);
 
   return 0;
 }
