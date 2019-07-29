@@ -5,7 +5,7 @@
 
 #include "bot.h"
 #include "interface.h"
-#include "namedrenderer.h"
+#include "scopedrenderer.h"
 #include "rlbot_generated.h"
 #include "statesetting.h"
 
@@ -49,9 +49,8 @@ Controller ExampleBot::GetOutput(
                         ballVelocity.y() * ballVelocity.y() +
                         ballVelocity.z() * ballVelocity.z());
 
+  // This renderer will build and send the packet once it goes out of scope
   NamedRenderer renderer("test");
-
-  renderer.StartPacket();
 
   std::vector<const rlbot::flat::Vector3*> points;
 
