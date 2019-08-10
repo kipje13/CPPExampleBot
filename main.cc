@@ -23,7 +23,8 @@ uint16_t getPortFromFile(std::string filename) {
 }
 
 int main(int argc, char **argv) {
-  Platform::SetWorkingDirectory(Platform::GetExecutableDirectory());
+  rlbotcpp::platform::SetWorkingDirectory(
+      rlbotcpp::platform::GetExecutableDirectory());
   uint16_t port = getPortFromFile("port.cfg");
 
   std::string interface_dll = std::string(DLLNAME);
@@ -39,12 +40,14 @@ int main(int argc, char **argv) {
     }
   }
 
-  Interface::LoadInterface(interface_dll);
+  rlbotcpp::Interface::LoadInterface(interface_dll);
 
-  while (!Interface::IsInitialized()) {
+  while (!rlbotcpp::Interface::IsInitialized()) {
+    rlbotcpp::platform::SleepMilliseconds(1);
   }
 
-  BotManager<ExampleBot> botmanager = BotManager<ExampleBot>();
+  rlbotcpp::BotManager<ExampleBot> botmanager =
+      rlbotcpp::BotManager<ExampleBot>();
   botmanager.StartBotServer(port);
 
   return 0;
