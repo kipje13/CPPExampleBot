@@ -2,9 +2,15 @@
 
 ## How to use:
  - Clone this repository by running: `git clone https://github.com/kipje13/CPPExampleBot.git --recursive`
- - Generate the solution with CMake.
+ - Make sure you have CMake. If you don't have it, visit https://cmake.org/download/ and run the Windows win64-x64 Installer.
+ - Make sure you have Visual Studio 2017. You can get it from https://visualstudio.microsoft.com/vs/older-downloads/.
+ - In a command prompt (use a fresh one if you just installed cmake), navigate to the folder and run `cmake .`
+ - Open Visual Studio 2017 and open the .sln file which now exists in the folder.
+ - Confirm that Build->Build Solution works.
+ - Right click on CPPExampleBot in the solution explorer and choose 'Set as StartUp Project'
  - Start a match by executing `rlbot/run.bat`
- - Build and run the CPPExampleBot executable.
+ - Choose Debug->Start Debugging (or F5), or press the green play button in Visual Studio.
+ - Open up examplebot.cc and start changing stuff! Visual Studio has a restart button you can press (or Ctrl+Shift+F5) when you want to recompile and try your new changes.
  
 ## Auto-start
 The rlbot framework has the ability to launch the bot executable automatically. This is usefull when sharing your bot and usually required when you enter a tournament.
