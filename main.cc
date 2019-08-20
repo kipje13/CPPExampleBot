@@ -46,8 +46,7 @@ int main(int argc, char **argv) {
 	  rlbot::platform::SleepMilliseconds(1);
   }
 
-  rlbot::BotManager<ExampleBot> botmanager =
-	  rlbot::BotManager<ExampleBot>();
+  rlbot::BotManager<ExampleBot> botmanager;
   botmanager.StartBotServer(port);
 
   return 0;
