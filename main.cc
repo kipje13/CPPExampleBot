@@ -23,28 +23,13 @@ uint16_t getPortFromFile(std::string filename) {
 }
 
 int main(int argc, char **argv) {
+  // Set the working directory to the directory of this executable so we can use
+  // relative paths.
   rlbot::platform::SetWorkingDirectory(
-	  rlbot::platform::GetExecutableDirectory());
+      rlbot::platform::GetExecutableDirectory());
+
+  // Read the port that we use for receiving bot spawn messages.
   uint16_t port = getPortFromFile("port.cfg");
-
-  std::string interface_dll = std::string(DLLNAME);
-
-  // parse arguments
-  for (int i = 1; i < argc; ++i) {
-    std::string arg(argv[i]);
-
-    if ((arg == "-dll-path") && i + 1 < argc) {
-      interface_dll = std::string(argv[++i]) + "\\" + DLLNAME;
-    } else {
-      std::cerr << "Bad option: '" << arg << "'" << std::endl;
-    }
-  }
-
-  rlbot::Interface::LoadInterface(interface_dll);
-
-  while (!rlbot::Interface::IsInitialized()) {
-	  rlbot::platform::SleepMilliseconds(1);
-  }
 
   rlbot::BotManager<ExampleBot> botmanager;
   botmanager.StartBotServer(port);
