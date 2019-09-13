@@ -1,3 +1,4 @@
+import platform
 import os
 import socket
 import time
@@ -19,7 +20,6 @@ class BaseCPPAgent(BaseIndependentAgent):
         self.cpp_executable_path = None
         
     def run_independently(self, terminate_request_event):
-
         while not terminate_request_event.is_set():
             message = f"add\n{self.name}\n{self.team}\n{self.index}\n{game_interface.get_dll_directory()}"
             try:
@@ -48,6 +48,8 @@ class BaseCPPAgent(BaseIndependentAgent):
         :return: A list of process ids that are used by this bot in addition to the ones inside the python process.
         """
         while not self.is_retired:
+            if platform.system() == 'Linux':
+                return []
             for proc in psutil.process_iter():
                 for conn in proc.connections():
                     if conn.laddr.port == self.port:

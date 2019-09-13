@@ -50,6 +50,9 @@ ExampleBot::GetOutput(const rlbot::flat::GameTickPacket *gameTickPacket,
                         ballVelocity.y() * ballVelocity.y() +
                         ballVelocity.z() * ballVelocity.z());
 
+  // This renderer will build and send the packet once it goes out of scope.
+  rlbot::ScopedRenderer renderer("test");
+
   // Load the ballprediction into a vector to use for rendering.
   std::vector<const rlbot::flat::Vector3 *> points;
 
@@ -57,10 +60,8 @@ ExampleBot::GetOutput(const rlbot::flat::GameTickPacket *gameTickPacket,
     points.push_back(ballPrediction->slices()->Get(i)->physics()->location());
   }
 
-  // This renderer will build and send the packet once it goes out of scope.
-  rlbot::ScopedRenderer renderer("test");
-
   renderer.DrawPolyLine3D(rlbot::Color::red, points);
+  
   renderer.DrawString2D("Hello world!", rlbot::Color::green,
                         rlbot::flat::Vector3{10, 10, 0}, 4, 4);
   renderer.DrawString3D(std::to_string(velocity), rlbot::Color::magenta,
