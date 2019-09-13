@@ -31,6 +31,12 @@ ExampleBot::ExampleBot(int _index, int _team, std::string _name)
   rlbot::Interface::SetGameState(gamestate);
 }
 
+ExampleBot::~ExampleBot()
+{
+	// Free your allocated memory here.
+	printf("test\n");
+}
+
 rlbot::Controller
 ExampleBot::GetOutput(const rlbot::flat::GameTickPacket *gameTickPacket,
                       const rlbot::flat::FieldInfo *fieldInfo,
