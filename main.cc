@@ -22,6 +22,10 @@ uint16_t getPortFromFile(std::string filename) {
   return std::stoi(line);
 }
 
+rlbot::Bot *botFactory(int index, int team, std::string name) {
+  return new ExampleBot(index, team, name);
+}
+
 int main(int argc, char **argv) {
   // Set the working directory to the directory of this executable so we can use
   // relative paths.
@@ -31,7 +35,8 @@ int main(int argc, char **argv) {
   // Read the port that we use for receiving bot spawn messages.
   uint16_t port = getPortFromFile("port.cfg");
 
-  rlbot::BotManager<ExampleBot> botmanager;
+  // Start the bot server.
+  rlbot::BotManager botmanager(botFactory);
   botmanager.StartBotServer(port);
 
   return 0;

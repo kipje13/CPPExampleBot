@@ -1,5 +1,6 @@
 #include "examplebot.h"
 
+#include <ctime>
 #include <math.h>
 #include <string>
 
@@ -31,25 +32,20 @@ ExampleBot::ExampleBot(int _index, int _team, std::string _name)
   rlbot::Interface::SetGameState(gamestate);
 }
 
-ExampleBot::~ExampleBot()
-{
-	// Free your allocated memory here.
-	printf("test\n");
+ExampleBot::~ExampleBot() {
+  // Free your allocated memory here.
 }
 
-rlbot::Controller
-ExampleBot::GetOutput(const rlbot::flat::GameTickPacket *gameTickPacket,
-                      const rlbot::flat::FieldInfo *fieldInfo,
-                      const rlbot::flat::BallPrediction *ballPrediction) {
+rlbot::Controller ExampleBot::GetOutput(rlbot::GameTickPacket gametickpacket) {
 
   rlbot::flat::Vector3 ballLocation =
-      *gameTickPacket->ball()->physics()->location();
+      *gametickpacket->ball()->physics()->location();
   rlbot::flat::Vector3 ballVelocity =
-      *gameTickPacket->ball()->physics()->velocity();
+      *gametickpacket->ball()->physics()->velocity();
   rlbot::flat::Vector3 carLocation =
-      *gameTickPacket->players()->Get(index)->physics()->location();
+      *gametickpacket->players()->Get(index)->physics()->location();
   rlbot::flat::Rotator carRotation =
-      *gameTickPacket->players()->Get(index)->physics()->rotation();
+      *gametickpacket->players()->Get(index)->physics()->rotation();
 
   // Calculate the velocity of the ball.
   float velocity = sqrt(ballVelocity.x() * ballVelocity.x() +
@@ -62,12 +58,14 @@ ExampleBot::GetOutput(const rlbot::flat::GameTickPacket *gameTickPacket,
   // Load the ballprediction into a vector to use for rendering.
   std::vector<const rlbot::flat::Vector3 *> points;
 
-  for (uint32_t i = 0; i < ballPrediction->slices()->size(); i++) {
-    points.push_back(ballPrediction->slices()->Get(i)->physics()->location());
+  rlbot::BallPrediction ballprediction = GetBallPrediction();
+
+  for (uint32_t i = 0; i < ballprediction->slices()->size(); i++) {
+    points.push_back(ballprediction->slices()->Get(i)->physics()->location());
   }
 
   renderer.DrawPolyLine3D(rlbot::Color::red, points);
-  
+
   renderer.DrawString2D("Hello world!", rlbot::Color::green,
                         rlbot::flat::Vector3{10, 10, 0}, 4, 4);
   renderer.DrawString3D(std::to_string(velocity), rlbot::Color::magenta,
