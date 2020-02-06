@@ -1,5 +1,13 @@
 # CPPExampleBot
 
+### Prerequisites
+ - Python 3.6 or 3.7
+ - CMake 3.8 and higher
+ - Compiler with c++17 support
+   - GCC 7.1 and higher
+   - Visual studion 2017 and higher
+   - Clang 5 and higher (not tested)
+
 ## How to use:
  - Make sure you've installed [Python 3.7 64 bit](https://www.python.org/downloads/). During installation:
    - Select "Add Python to PATH"
