@@ -4,12 +4,12 @@
 #include <math.h>
 #include <string>
 
-#include "bot.h"
-#include "color.h"
-#include "interface.h"
-#include "rlbot_generated.h"
-#include "scopedrenderer.h"
-#include "statesetting.h"
+#include "rlbot/bot.h"
+#include "rlbot/color.h"
+#include "rlbot/interface.h"
+#include "rlbot/rlbot_generated.h"
+#include "rlbot/scopedrenderer.h"
+#include "rlbot/statesetting.h"
 
 #define PI 3.1415
 

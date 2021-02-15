@@ -1,11 +1,11 @@
-#include "rlbot_generated.h"
+#include "rlbot/rlbot_generated.h"
 
 #include "examplebot.h"
 
-#include "bot.h"
-#include "botmanager.h"
-#include "interface.h"
-#include "platform.h"
+#include "rlbot/bot.h"
+#include "rlbot/botmanager.h"
+#include "rlbot/interface.h"
+#include "rlbot/platform.h"
 
 #include <cctype>
 #include <fstream>

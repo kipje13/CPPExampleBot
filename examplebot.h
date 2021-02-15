@@ -1,6 +1,6 @@
 #pragma once
 
-#include "bot.h"
+#include "rlbot/bot.h"
 
 class ExampleBot : public rlbot::Bot {
 public:
